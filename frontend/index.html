@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AI Personalized Networking Assistant</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
+}
+
+
+body{
+
+background:
+linear-gradient(
+135deg,
+#fce7f3,
+#ede9fe,
+#e0f2fe
+);
+
+min-height:100vh;
+
+}
+
+
+/* CONTAINER */
+
+.container{
+
+display:flex;
+
+padding:20px;
+
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+
+width:280px;
+
+height:calc(100vh - 40px);
+
+background:white;
+
+border-radius:25px;
+
+padding:35px 25px;
+
+position:fixed;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+
+
+.logo{
+
+text-align:center;
+
+}
+
+
+.logo h1{
+
+color:#6d28d9;
+
+font-size:28px;
+
+}
+
+
+.logo p{
+
+color:#555;
+
+margin-top:8px;
+
+}
+
+
+
+
+
+.menu{
+
+margin-top:45px;
+
+}
+
+
+
+.menu button{
+
+
+width:100%;
+
+border:none;
+
+background:none;
+
+padding:15px 18px;
+
+margin-bottom:12px;
+
+border-radius:15px;
+
+text-align:left;
+
+font-size:16px;
+
+color:#333;
+
+cursor:pointer;
+
+}
+
+
+
+
+.menu button:hover,
+.menu .active{
+
+
+background:
+linear-gradient(
+90deg,
+#a78bfa,
+#60a5fa
+);
+
+color:white;
+
+}
+
+
+
+
+.logout{
+
+position:absolute;
+
+bottom:30px;
+
+width:230px;
+
+}
+
+
+.logout button{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:15px;
+
+background:#fee2e2;
+
+color:#dc2626;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+
+
+
+
+/* CONTENT */
+
+.content{
+
+margin-left:300px;
+
+width:calc(100% - 320px);
+
+}
+
+
+
+.page{
+
+display:none;
+
+}
+
+
+
+.page.active{
+
+display:block;
+
+}
+
+
+
+
+.card{
+
+background:white;
+
+padding:35px;
+
+border-radius:28px;
+
+margin-bottom:22px;
+
+
+box-shadow:
+0 10px 25px rgba(0,0,0,0.07);
+
+}
+
+
+
+
+.card h1{
+
+color:#6d28d9;
+
+font-size:34px;
+
+}
+
+
+
+.card h2{
+
+color:#6d28d9;
+
+}
+
+
+
+.card p{
+
+margin-top:12px;
+
+color:#111;
+
+font-size:18px;
+
+}
+
+
+
+
+
+input,
+textarea{
+
+
+width:100%;
+
+padding:15px;
+
+margin-top:15px;
+
+border-radius:15px;
+
+border:1px solid #ddd;
+
+font-size:16px;
+
+outline:none;
+
+}
+
+
+
+textarea{
+
+resize:none;
+
+}
+
+
+
+.action-btn{
+
+margin-top:15px;
+
+padding:14px 35px;
+
+border:none;
+
+border-radius:15px;
+
+
+background:
+linear-gradient(
+90deg,
+#a78bfa,
+#60a5fa
+);
+
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+
+
+
+.result-box{
+
+background:#fafafa;
+
+padding:20px;
+
+border-radius:20px;
+
+margin-top:15px;
+
+min-height:150px;
+
+color:#111;
+
+}
+
+
+
+
+
+/* AI PROFILE ICON */
+
+
+.ai-logo{
+
+position:absolute;
+
+right:35px;
+
+top:30px;
+
+
+width:55px;
+
+height:55px;
+
+
+border-radius:50%;
+
+
+background:
+linear-gradient(
+90deg,
+#a78bfa,
+#60a5fa
+);
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:28px;
+
+cursor:pointer;
+
+}
+
+
+
+.welcome-card{
+
+position:relative;
+
+}
+
+
+
+/* PROFILE */
+
+
+.profile-box{
+
+display:flex;
+
+gap:30px;
+
+align-items:center;
+
+}
+
+
+.profile-image{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+
+background:
+linear-gradient(
+135deg,
+#a78bfa,
+#60a5fa
+);
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:45px;
+
+color:white;
+
+}
+
+
+
+.profile-info h2{
+
+color:#6d28d9;
+
+}
+
+
+.profile-info p{
+
+font-size:17px;
+
+margin-top:8px;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<div class="container">
+
+
+
+<!-- SIDEBAR -->
+
+
+<div class="sidebar">
+
+
+
+<div class="logo">
+
+
+<h1>
+
+🤝 Networking<br>
+Assistant
+
+</h1>
+
+
+<p>
+Professional Networking
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="menu">
+
+
+<button
+class="active"
+onclick="showPage('dashboard',this)">
+
+🏠 Dashboard
+
+</button>
+
+
+
+
+<button
+onclick="showPage('event',this)">
+
+🧠 Event Analyzer
+
+</button>
+
+
+
+
+<button
+onclick="showPage('conversation',this)">
+
+💬 Conversation Generator
+
+</button>
+
+
+
+
+<button
+onclick="showPage('fact',this)">
+
+📚 Fact Checker
+
+</button>
+
+
+
+
+<button
+onclick="showPage('history',this)">
+
+🕘 History
+
+</button>
+
+
+
+
+<button
+onclick="showPage('feedback',this)">
+
+⭐ Feedback
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="logout">
+
+
+<button onclick="logout()">
+
+🚪 Logout
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- MAIN CONTENT -->
+
+
+<div class="content">
+
+
+
+<!-- DASHBOARD -->
+
+
+<section 
+id="dashboard"
+class="page active">
+
+
+<div class="card welcome-card">
+
+
+<div class="ai-logo"
+onclick="showPage('profile',this)">
+
+🤖
+
+</div>
+
+
+
+<h2 id="welcomeText">
+
+Welcome Back 👋
+
+</h2>
+
+
+<p>
+
+Continue building professional connections with your AI Networking Assistant.
+
+</p>
+
+
+</div>
+
+
+
+<div class="card">
+
+
+<h1>
+
+🤖 AI Personalized Networking Assistant
+
+</h1>
+
+
+<p>
+
+An intelligent platform designed to help you build meaningful professional connections.
+   Generate personalized conversation starters, analyze networking events, uncover key insights from interactions, verify information, and enhance your communication skills with AI-powered assistance. 
+    
+</p>
+
+
+</div>
+
+
+<div class="card">
+
+
+<h2>
+
+✨ AI Networking Features
+
+</h2>
+
+
+<div style="
+display:flex;
+gap:20px;
+margin-top:25px;
+flex-wrap:wrap;
+">
+
+
+<div style="
+flex:1;
+min-width:220px;
+background:#f8fafc;
+padding:20px;
+border-radius:20px;
+">
+
+<h3 style="color:#6d28d9;">
+
+🧠 Event Intelligence
+
+</h3>
+
+<p>
+
+Analyze conferences, workshops, and networking events to discover valuable insights.
+
+</p>
+
+</div>
+
+
+
+
+
+<div style="
+flex:1;
+min-width:220px;
+background:#f8fafc;
+padding:20px;
+border-radius:20px;
+">
+
+
+<h3 style="color:#6d28d9;">
+
+💬 Smart Conversations
+
+</h3>
+
+<p>
+
+Generate professional conversation starters for meaningful interactions..
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div style="
+flex:1;
+min-width:220px;
+background:#f8fafc;
+padding:20px;
+border-radius:20px;
+">
+
+
+<h3 style="color:#6d28d9;">
+📚 Fact Verification
+
+</h3>
+
+
+<p>
+
+Verify information before networking discussions for accurate communication.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+</section>
+<!-- EVENT ANALYZER -->
+
+<section 
+id="event"
+class="page">
+
+
+<div class="card">
+
+
+<h1>
+🧠 Event Analyzer
+</h1>
+
+
+<p>
+Analyze conferences, workshops and networking events using AI.
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+Enter Event Details
+</h2>
+
+
+
+<textarea
+
+id="eventInput"
+
+placeholder="Paste event details here..."
+
+style="height:200px;">
+
+</textarea>
+
+
+
+
+
+<button
+
+class="action-btn"
+
+onclick="analyzeEvent()">
+
+Analyze Event
+
+</button>
+
+
+
+
+
+
+<h2 style="margin-top:30px;">
+
+AI Analysis Result
+
+</h2>
+
+
+
+
+
+<div
+
+id="eventResult"
+
+class="result-box">
+
+Your analysis will appear here...
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- CONVERSATION GENERATOR -->
+
+
+<section
+
+id="conversation"
+
+class="page">
+
+
+
+<div class="card">
+
+
+<h1>
+💬 Conversation Generator
+</h1>
+
+
+
+<p>
+Create smart professional conversation starters using AI.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+Enter Details
+</h2>
+
+
+
+
+
+
+<input
+
+id="personName"
+
+placeholder="Person Name"
+
+>
+
+
+
+
+
+<input
+
+id="companyName"
+
+placeholder="Company / Organization"
+
+>
+
+
+
+
+
+
+
+<textarea
+
+id="topicInput"
+
+placeholder="Enter topic or event details..."
+
+style="height:150px;">
+
+</textarea>
+
+
+
+
+
+
+
+
+<button
+
+class="action-btn"
+
+onclick="generateConversation()">
+
+
+Generate Conversation
+
+
+</button>
+
+
+
+
+
+
+
+<h2 style="margin-top:30px;">
+
+AI Suggestions
+
+</h2>
+
+
+
+
+
+
+
+<div
+
+id="conversationResult"
+
+class="result-box">
+
+
+Your conversation suggestions will appear here...
+
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FACT CHECKER -->
+
+
+<section
+
+id="fact"
+
+class="page">
+
+
+
+<div class="card">
+
+
+<h1>
+📚 Fact Checker
+</h1>
+
+
+<p>
+Check the accuracy of information using AI assistance.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+Enter Information
+</h2>
+
+
+
+
+
+
+
+
+<textarea
+
+id="factInput"
+
+placeholder="Paste a statement or information to verify..."
+
+style="height:180px;">
+
+</textarea>
+
+
+
+
+
+
+
+<button
+
+class="action-btn"
+
+onclick="checkFact()">
+
+
+Check Fact
+
+
+</button>
+
+
+
+
+
+
+
+<h2 style="margin-top:30px;">
+
+Verification Result
+
+</h2>
+
+
+
+
+
+
+
+
+<div
+
+id="factResult"
+
+class="result-box">
+
+
+Fact result will appear here...
+
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- PROFILE PAGE -->
+
+<section id="profile" class="page">
+
+    <div class="card">
+
+        <h1>👤 My Profile</h1>
+
+        <p>
+            Manage your personal information and networking preferences.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="profile-box">
+
+            <div class="profile-image">
+                👤
+            </div>
+
+            <div class="profile-info">
+
+                <h2 id="profileName">
+                    User Name
+                </h2>
+
+                <p id="profileEmail">
+                    user@email.com
+                </p>
+
+                <p>
+                    <strong>Role:</strong> <span id="profileRole">IT Student</span>
+                </p>
+
+                <p>
+                    <p><strong>Phone:</strong> <span id="profilePhone">Not Added</span></p>
+
+                <p><strong>Status:</strong>
+                    <span style="color:#16a34a;font-weight:600;">
+                        ● Active
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📝 About Me</h2>
+
+        <p style="line-height:1.8;">
+
+            Passionate Information Technology student with an interest in
+            Artificial Intelligence, Cloud Computing, and Professional
+            Networking. Enthusiastic about learning emerging technologies,
+            collaborating with peers, and building meaningful professional
+            connections through AI-powered solutions.
+
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>💡 Networking Interests</h2>
+
+        <div style="
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+            margin-top:20px;
+        ">
+
+            <span style="
+                background:#ede9fe;
+                color:#6d28d9;
+                padding:10px 18px;
+                border-radius:30px;
+                font-weight:600;
+            ">
+                Artificial Intelligence
+            </span>
+
+            <span style="
+                background:#dbeafe;
+                color:#2563eb;
+                padding:10px 18px;
+                border-radius:30px;
+                font-weight:600;
+            ">
+                Cloud Computing
+            </span>
+
+            <span style="
+                background:#dcfce7;
+                color:#15803d;
+                padding:10px 18px;
+                border-radius:30px;
+                font-weight:600;
+            ">
+                Web Development
+            </span>
+
+            <span style="
+                background:#fee2e2;
+                color:#dc2626;
+                padding:10px 18px;
+                border-radius:30px;
+                font-weight:600;
+            ">
+                Data Analytics
+            </span>
+
+            <span style="
+                background:#fef3c7;
+                color:#b45309;
+                padding:10px 18px;
+                border-radius:30px;
+                font-weight:600;
+            ">
+                Professional Networking
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>⚙️ Account</h2>
+
+        <div style="
+            display:flex;
+            gap:15px;
+            flex-wrap:wrap;
+            margin-top:20px;
+        ">
+
+            <button class="action-btn" onclick="editProfile()">
+                ✏️ Edit Profile
+            </button>
+
+            <button
+                class="action-btn"
+                onclick="logout()"
+                style="
+                    background:linear-gradient(90deg,#f87171,#ef4444);
+                "
+            >
+                🚪 Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+<!-- HISTORY -->
+
+
+<section
+
+id="history"
+
+class="page">
+
+
+
+<div class="card">
+
+
+<h1>
+🕘 History
+</h1>
+
+
+<p>
+Your previous AI activities
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<div id="historyList">
+
+
+Loading history...
+
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- FEEDBACK -->
+
+
+<section
+
+id="feedback"
+
+class="page">
+
+
+
+<div class="card">
+
+
+<h1>
+⭐ Feedback
+</h1>
+
+
+<p>
+Help us improve your AI Networking Assistant.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<input
+
+id="feedbackName"
+
+placeholder="Your Name"
+
+>
+
+
+
+
+
+
+
+<textarea
+
+id="feedbackText"
+
+placeholder="Write your feedback..."
+
+style="height:150px;">
+
+</textarea>
+
+
+
+
+
+
+
+
+<button
+
+class="action-btn"
+
+onclick="submitFeedback()">
+
+
+Submit Feedback
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
+</div>
+
+
+<div id="editPopup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);justify-content:center;align-items:center;z-index:9999;">
+<div style="background:#fff;padding:30px;border-radius:20px;width:420px;">
+<h2>Edit Profile</h2>
+<input id="editName" placeholder="Name">
+<input id="editRole" placeholder="Role">
+<input id="editPhone" placeholder="Phone">
+<div style="display:flex;gap:10px;margin-top:20px;">
+<button class="action-btn" onclick="saveProfile()">Save</button>
+<button class="action-btn" style="background:#ef4444" onclick="closePopup()">Cancel</button>
+</div></div></div>
+
+</div>
+<script type="module">
+
+
+// ===============================
+// FIREBASE IMPORTS
+// ===============================
+
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+
+getDatabase,
+
+ref,
+
+push,
+
+set,
+
+onValue,
+
+get
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+// ===============================
+// FIREBASE CONFIG
+// ===============================
+
+
+const firebaseConfig = {
+
+
+apiKey:
+"AIzaSyAIddgZEOS6FcbHEyrd1ZsIohP9RRrggTo",
+
+
+authDomain:
+"networking-assistant-db80f.firebaseapp.com",
+
+
+databaseURL:
+"https://networking-assistant-db80f-default-rtdb.firebaseio.com",
+
+
+projectId:
+"networking-assistant-db80f",
+
+
+storageBucket:
+"networking-assistant-db80f.firebasestorage.app",
+
+
+messagingSenderId:
+"295350307649",
+
+
+appId:
+"1:295350307649:web:accf27779695696817efc0",
+
+
+measurementId:
+"G-7TRPPSBF9K"
+
+
+};
+
+
+
+
+
+// INITIALIZE FIREBASE
+
+
+const app = initializeApp(firebaseConfig);
+
+
+const database = getDatabase(app);
+
+
+
+
+
+
+// ===============================
+// PAGE NAVIGATION
+// ===============================
+
+
+window.showPage=function(page,button){
+
+
+
+document
+
+.querySelectorAll(".page")
+
+.forEach(section=>{
+
+
+section.classList.remove("active");
+
+
+});
+
+
+
+
+document
+
+.getElementById(page)
+
+.classList.add("active");
+
+
+
+
+
+document
+
+.querySelectorAll(".menu button")
+
+.forEach(btn=>{
+
+
+btn.classList.remove("active");
+
+
+});
+
+
+
+
+
+if(button){
+
+
+button.classList.add("active");
+
+
+}
+
+
+
+// Load history when opening history page
+
+if(page=="history"){
+
+loadHistory();
+
+}
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// LOGOUT
+// ===============================
+
+
+window.logout=function(){
+
+
+localStorage.clear();
+
+
+window.location.href="login.html";
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// LOAD USER PROFILE
+// ===============================
+
+
+window.onload = async function () {
+
+    let username = localStorage.getItem("userName");
+    let email = localStorage.getItem("userEmail");
+
+    if (username) {
+        document.getElementById("welcomeText").innerHTML =
+            "Welcome Back " + username + " 👋";
+
+        document.getElementById("profileName").innerHTML = username;
+    }
+
+    if (email) {
+        document.getElementById("profileEmail").innerHTML = email;
+    }
+
+    await loadUserProfile();
+
+    loadActivityCount();
+};
+
+async function loadUserProfile() {
+
+    let email = localStorage.getItem("userEmail");
+
+    if (!email) return;
+
+    let key = email.replace(/\./g, "_");
+
+    const snapshot = await get(ref(database, "users/" + key));
+
+    if (snapshot.exists()) {
+
+        const user = snapshot.val();
+
+        profileName.textContent = user.name || "User Name";
+        profileEmail.textContent = user.email || email;
+        profileRole.textContent = user.role || "IT Student";
+        profilePhone.textContent = user.phone || "Not Added";
+
+        welcomeText.textContent =
+            "Welcome Back " + (user.name || "User") + " 👋";
+    }
+
+}
+
+
+
+
+
+
+
+// ===============================
+// SAVE HISTORY FUNCTION
+// ===============================
+
+
+function saveHistory(type,details){
+
+
+
+let email =
+
+localStorage.getItem("userEmail");
+
+
+
+if(!email){
+
+return;
+
+}
+
+
+
+
+let userKey =
+email.replace(/\./g,"_");
+
+
+
+
+
+let historyRef =
+
+ref(
+
+database,
+
+"users/"+userKey+"/history"
+
+);
+
+
+
+
+
+let newHistory =
+
+push(historyRef);
+
+
+
+
+
+set(newHistory,{
+
+
+type:type,
+
+
+details:details,
+
+
+date:
+
+new Date().toLocaleString()
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// LOAD HISTORY
+// ===============================
+
+
+// ===============================
+// LOAD HISTORY
+// ===============================
+
+function loadHistory(){
+
+    let email = localStorage.getItem("userEmail");
+
+    if(!email){
+        document.getElementById("historyList").innerHTML =
+        "No user logged in";
+        return;
+    }
+
+
+    // CREATE USER KEY
+    let userKey = email.replace(/\./g,"_");
+
+
+    let historyRef = ref(
+        database,
+        "users/" + userKey + "/history"
+    );
+
+
+    onValue(historyRef,(snapshot)=>{
+
+        let data = snapshot.val();
+
+        let output = "";
+
+
+        if(data){
+
+            Object.values(data)
+            .reverse()
+            .forEach(item=>{
+
+
+                output += `
+
+                <div style="
+                background:#fafafa;
+                padding:15px;
+                border-radius:15px;
+                margin-bottom:10px;
+                ">
+
+                    <h3 style="color:#6d28d9;">
+                        ${item.type}
+                    </h3>
+
+                    <p>
+                        ${item.details}
+                    </p>
+
+                    <small>
+                        ${item.date}
+                    </small>
+
+                </div>
+
+                `;
+
+            });
+
+
+        }
+        else{
+
+            output = "No activities found";
+
+        }
+
+
+        document.getElementById("historyList").innerHTML = output;
+
+
+    });
+
+}
+
+
+
+
+// ===============================
+// LOAD ACTIVITY COUNT
+// ===============================
+
+
+function loadActivityCount(){
+
+}
+
+
+// ===============================
+// EVENT ANALYZER
+// ===============================
+
+
+window.analyzeEvent = async function(){
+
+
+let eventText =
+
+document.getElementById("eventInput").value;
+
+
+
+if(eventText==""){
+
+
+alert("Enter event details");
+
+return;
+
+}
+
+
+
+document.getElementById("eventResult").innerHTML=
+"Analyzing...";
+
+
+
+try{
+
+
+let response = await fetch(
+
+"http://127.0.0.1:8000/analyze-event",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+event_description:eventText
+
+})
+
+
+}
+
+);
+
+
+
+let data = await response.json();
+
+
+
+
+document.getElementById("eventResult").innerHTML =
+
+data.themes || JSON.stringify(data);
+
+
+
+
+// SAVE HISTORY
+
+saveHistory(
+
+"🧠 Event Analysis",
+
+eventText
+
+);
+
+
+
+}
+
+catch(error){
+
+
+
+document.getElementById("eventResult").innerHTML=
+
+"Backend connection failed. Start FastAPI server.";
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// CONVERSATION GENERATOR
+// ===============================
+
+
+
+window.generateConversation = async function(){
+
+
+
+let name =
+
+document.getElementById("personName").value;
+
+
+
+let company =
+
+document.getElementById("companyName").value;
+
+
+
+let topic =
+
+document.getElementById("topicInput").value;
+
+
+
+
+
+if(topic==""){
+
+
+alert("Enter topic details");
+
+
+return;
+
+
+}
+
+
+
+
+
+document.getElementById("conversationResult").innerHTML=
+
+"Generating...";
+
+
+
+
+
+try{
+
+
+
+let response = await fetch(
+
+"http://127.0.0.1:8000/generate-conversation",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+event:topic,
+
+
+interests:
+name+" from "+company
+
+
+})
+
+
+}
+
+);
+
+
+
+
+let data = await response.json();
+
+
+
+
+
+document.getElementById("conversationResult").innerHTML=
+
+data.conversation || JSON.stringify(data);
+
+
+
+
+
+// SAVE HISTORY
+
+saveHistory(
+
+"💬 Conversation Generated",
+
+topic
+
+);
+
+
+
+}
+
+
+catch(error){
+
+
+
+document.getElementById("conversationResult").innerHTML=
+
+"Backend connection failed. Start FastAPI server.";
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// FACT CHECKER
+// ===============================
+
+
+
+window.checkFact = async function(){
+
+
+
+let text =
+
+document.getElementById("factInput").value;
+
+
+
+
+
+if(text==""){
+
+
+alert("Enter information");
+
+
+return;
+
+
+}
+
+
+
+
+document.getElementById("factResult").innerHTML=
+
+"Checking...";
+
+
+
+
+
+
+try{
+
+
+
+let response = await fetch(
+
+"http://127.0.0.1:8000/fact-check",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+topic:text
+
+})
+
+
+}
+
+);
+
+
+
+
+
+
+let data = await response.json();
+
+
+
+
+
+document.getElementById("factResult").innerHTML=
+
+data.summary || JSON.stringify(data);
+
+
+
+
+
+
+// SAVE HISTORY
+
+saveHistory(
+
+"📚 Fact Checked",
+
+text
+
+);
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+document.getElementById("factResult").innerHTML=
+
+"Backend connection failed. Start FastAPI server.";
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// FEEDBACK SAVE TO FIREBASE
+// ===============================
+
+
+
+window.submitFeedback=function(){
+
+
+
+let name =
+
+document.getElementById("feedbackName").value;
+
+
+
+let message =
+
+document.getElementById("feedbackText").value;
+
+
+
+
+
+if(name=="" || message==""){
+
+
+
+alert("Fill all fields");
+
+
+return;
+
+
+}
+
+
+
+
+
+let feedbackRef =
+
+ref(database,"feedback");
+
+
+
+
+
+let newFeedback =
+
+push(feedbackRef);
+
+
+
+
+
+set(newFeedback,{
+
+
+name:name,
+
+
+message:message,
+
+
+email:
+
+localStorage.getItem("userEmail"),
+
+
+
+date:
+
+new Date().toLocaleString()
+
+
+
+});
+
+
+
+
+
+alert("Thank you for your feedback!");
+
+
+
+
+
+document.getElementById("feedbackName").value="";
+
+
+document.getElementById("feedbackText").value="";
+
+
+
+};
+
+window.editProfile=async function(){
+let email=localStorage.getItem("userEmail"); if(!email)return;
+let key=email.replace(/\./g,"_");
+let snap=await get(ref(database,"users/"+key));
+if(snap.exists()){
+let u=snap.val();
+editName.value=u.name||"";
+editRole.value=u.role||"";
+editPhone.value=u.phone||"";
+}
+editPopup.style.display="flex";
+}
+
+window.closePopup = function () {
+    editPopup.style.display = "none";
+};
+
+window.saveProfile = async function () {
+
+    let email = localStorage.getItem("userEmail");
+
+    let key = email.replace(/\./g, "_");
+
+    let obj = {
+        name: editName.value,
+        email: email,
+        role: editRole.value,
+        phone: editPhone.value
+    };
+
+    await set(ref(database, "users/" + key), obj);
+
+    profileName.textContent = obj.name;
+    profileEmail.textContent = obj.email;
+    profileRole.textContent = obj.role;
+    profilePhone.textContent = obj.phone;
+
+    welcomeText.textContent = "Welcome Back " + obj.name + " 👋";
+
+    localStorage.setItem("userName", obj.name);
+
+    closePopup();
+
+    alert("Profile updated successfully.");
+};
+
+
+
+</script>
+
+</body>
+
+</html>
